@@ -1,1 +1,21 @@
-Navigate into the Frontend directory. Initialize a new Next.js project using the App Router configured to run on port 3000. Install next-auth and configure the boilerplate for a Keycloak OIDC provider. Create the directory structure and pages for a public Home page, a protected User dashboard, and a protected Admin dashboard. Implement logic to read the user roles from the Keycloak session token to conditionally render navigation links and protect the Admin dashboard. Create a utility demonstrating how to send an authenticated fetch request with a Bearer token to the FastAPI backend at http://localhost:8000
+I need you to write the authentication implementation for both the frontend and backend.
+
+Task 1: Next.js Frontend Authentication (NextAuth)
+Please implement the Keycloak authentication flow using NextAuth.
+* Use the following environment variables: AUTH_KEYCLOAK_ID, AUTH_KEYCLOAK_SECRET, AUTH_KEYCLOAK_ISSUER, and AUTH_SECRET.
+* Configure the KeycloakProvider.
+* CRITICAL: Keycloak buries user roles inside the JWT payload under realm_access.roles. You must write custom jwt and session callbacks in the NextAuth configuration to intercept the token, decode the base64 payload, extract the realm_access.roles array, and attach it to the session.user.roles object so it is available to the client.
+* Provide an example of a protected Next.js client component that conditionally renders a button only if the user has the "admin" role.
+
+Task 2: FastAPI Backend Security Middleware
+Please implement the JWT validation middleware to protect my API routes.
+* Use python-jose[cryptography] and httpx.
+* The backend should read the KEYCLOAK_ISSUER environment variable (e.g., http://localhost:8080/realms/society).
+* Create a dependency (get_current_user) that:
+  1. Extracts the Bearer token from the request header using HTTPBearer.
+  2. Fetches the Keycloak public keys (JWKS) from {KEYCLOAK_ISSUER}/protocol/openid-connect/certs.
+  3. Decodes and validates the token signature, expiration, and audience.
+* Create a RoleChecker dependency class that takes a list of allowed roles. It should inspect the decoded token's realm_access.roles and raise a 403 Forbidden HTTP exception if the user lacks the required roles.
+* Provide two example protected routes: one that requires the "admin" role, and one that requires the "user" role.
+
+Please write clean, modular code and let me know which files I should place these snippets into.

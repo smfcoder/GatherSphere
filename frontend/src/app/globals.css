@@ -1,3 +1,5 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,11 +9,13 @@
 body {
   font-family: var(--font-geist-sans), system-ui, sans-serif;
   line-height: 1.6;
-  color: #333;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff, #c7d2fe);
+  color: #1f2937;
 }
 
 a {
-  color: #2563eb;
+  color: #4f46e5;
   text-decoration: none;
 }
 
@@ -21,24 +25,249 @@ a:hover {
 
 button {
   font-family: inherit;
-  font-size: inherit;
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(79, 70, 229, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 24px rgba(79, 70, 229, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.glass-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(79, 70, 229, 0.12);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(79, 70, 229, 0.15);
+  border-radius: 8px;
+  color: #1f2937;
+  padding: 0.6rem 1rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.glass-input::placeholder {
+  color: #9ca3af;
+}
+
+.glass-select {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(79, 70, 229, 0.15);
+  border-radius: 8px;
+  color: #1f2937;
+  padding: 0.6rem 1rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+.glass-select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.glass-select option {
   background: #fff;
-  transition: background 0.2s;
+  color: #1f2937;
 }
 
-button:hover {
-  background: #f0f0f0;
+.btn-glow {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
-h1 {
-  margin-bottom: 1rem;
+.btn-glow:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(79, 70, 229, 0.3);
+  color: #fff;
 }
 
-p {
-  margin-bottom: 0.75rem;
+.btn-glow-danger {
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-glow-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
+  color: #fff;
+}
+
+.btn-glow-secondary {
+  background: rgba(79, 70, 229, 0.08);
+  border: 1px solid rgba(79, 70, 229, 0.2);
+  color: #4f46e5;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-glow-secondary:hover {
+  background: rgba(79, 70, 229, 0.14);
+  transform: translateY(-1px);
+  color: #4338ca;
+}
+
+.btn-glow-success {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  border: none;
+  color: #fff;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.btn-glow-success:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.3);
+  color: #fff;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+.nav-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(79, 70, 229, 0.1);
+}
+
+.tab-glass {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(79, 70, 229, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tab-glass .nav-link {
+  color: #6b7280;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0;
+  transition: all 0.2s;
+}
+
+.tab-glass .nav-link:hover {
+  color: #4f46e5;
+  background: rgba(79, 70, 229, 0.04);
+}
+
+.tab-glass .nav-link.active {
+  color: #4f46e5;
+  background: rgba(79, 70, 229, 0.1);
+  border-bottom: 2px solid #4f46e5;
+  font-weight: 600;
+}
+
+.table-container {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.table-custom {
+  margin-bottom: 0;
+}
+
+.table-custom thead {
+  background: #f9fafb;
+}
+
+.table-custom th {
+  color: #374151;
+  font-weight: 600;
+  border-bottom: 2px solid #e5e7eb;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.table-custom td {
+  color: #1f2937;
+  border-bottom: 1px solid #f3f4f6;
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
+}
+
+.table-custom tbody tr:hover {
+  background: #fafbff;
+}
+
+.modal-glass .modal-content {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(79, 70, 229, 0.12);
+  border-radius: 16px;
+  color: #1f2937;
+}
+
+.modal-glass .modal-header {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-glass .modal-footer {
+  border-top: 1px solid #e5e7eb;
+}
+
+h1, h2, h3, h4 {
+  color: #1e1b4b;
+}
+
+label {
+  color: #374151 !important;
+  font-weight: 500;
 }
 
 pre {

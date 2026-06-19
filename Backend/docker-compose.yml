@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: society_db
+    environment:
+      POSTGRES_USER: db_admin
+      POSTGRES_PASSWORD: Smf#4321
+      POSTGRES_DB: society_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - society_data:/var/lib/postgresql/data
+
+volumes:
+  society_data:

@@ -6,3 +6,4 @@ postgres_data/
 frontend/.next/
 frontend/node_modules/
 frontend/.env.local
+ReadPrompt.txt

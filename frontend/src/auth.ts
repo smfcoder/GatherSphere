@@ -1,6 +1,38 @@
 import NextAuth from "next-auth"
 import Keycloak from "next-auth/providers/keycloak"
 
+type KeycloakJwtPayload = {
+  realm_access?: { roles?: string[] }
+  resource_access?: Record<string, { roles?: string[] }>
+  email?: string
+  preferred_username?: string
+  name?: string
+  picture?: string
+}
+
+function decodeJwtPayload(accessToken: string): KeycloakJwtPayload {
+  const [, payload] = accessToken.split(".")
+
+  if (!payload) return {}
+
+  const base64 = payload.replace(/-/g, "+").replace(/_/g, "/")
+  const padded = base64.padEnd(base64.length + ((4 - (base64.length % 4)) % 4), "=")
+  const json = Buffer.from(padded, "base64").toString("utf-8")
+
+  return JSON.parse(json)
+}
+
+function extractRoles(payload: KeycloakJwtPayload): string[] {
+  const realmRoles = payload.realm_access?.roles ?? []
+  const resourceRoles = Object.values(payload.resource_access ?? {}).flatMap(
+    (client) => client.roles ?? []
+  )
+
+  return Array.from(new Set([...realmRoles, ...resourceRoles])).filter((role) =>
+    ["admin", "user"].includes(role)
+  )
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     Keycloak({
@@ -10,17 +42,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    jwt({ token, account, profile }) {
+    async jwt({ token, account }) {
       if (account?.access_token) token.accessToken = account.access_token
-      if (profile) {
-        const keycloakProfile = profile as { realm_access?: { roles: string[] } }
-        token.roles = keycloakProfile.realm_access?.roles ?? []
+
+      if (token.accessToken) {
+        const payload = decodeJwtPayload(token.accessToken as string)
+        token.roles = extractRoles(payload)
       }
+
       return token
     },
     session({ session, token }) {
       session.accessToken = token.accessToken as string
-      session.user.roles = (token.roles as string[]) ?? []
+      session.user.roles = Array.isArray(token.roles) ? token.roles : []
       return session
     },
     authorized({ auth, request: { nextUrl } }) {
@@ -34,7 +68,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (isOnAdmin) {
         const roles = (auth?.user as { roles?: string[] })?.roles ?? []
         if (!isLoggedIn) return false
-        if (!roles.includes("admin")) return Response.redirect(new URL("/dashboard", nextUrl))
+        if (!roles.includes("admin")) return Response.redirect(new URL("/", nextUrl))
         return true
       }
 

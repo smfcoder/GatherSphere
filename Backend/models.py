@@ -10,3 +10,8 @@ class User(Base):
     name = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     phone = Column(String, nullable=True)
+    flat_number = Column(String, nullable=True)
+    floor_number = Column(String, nullable=True)
+    resident_type = Column(String, nullable=True)
+    family_members = Column(Integer, nullable=True)
+    vehicle_details = Column(String, nullable=True)
